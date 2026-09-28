@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    
+    <script>
+        function notas() {
+
+            var cantidad = parseInt(prompt("¿Cuántos alumnos hay?"));
+            var suma = 0;
+
+            for (var i = 0; i < cantidad; i++) {
+
+                var nota = prompt("Nota alumno " + (i + 1));
+                nota = parseFloat(nota);
+
+                suma = suma + nota;
+            }
+
+            var media = suma / cantidad;
+
+            if ( media >= 5 ) {
+                alert("Media: " + media + " - Grupo aprobado");
+            }
+            else {
+                alert("Media: " + media + " - Grupo suspenso");
+            }
+        }
+
+        notas();
+    </script>
+</body>
+</html>

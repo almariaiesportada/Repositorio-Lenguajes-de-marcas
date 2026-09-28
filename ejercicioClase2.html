@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animal</title>
+    <script>
+        class Animal {
+            constructor() {
+                this.animal1 = {
+                    tipo: "Gato",
+                    raza: "Siamés",
+                    nombre: "Dora",
+                    patas: 4
+                }
+                this.animal2 = {
+                    tipo: "Perro",
+                    raza: "Chihuahua",
+                    nombre: "Patitas",
+                    patas: 4
+                }
+            }
+            verTipo() {
+                return this.animal.tipo;
+            }
+            verRaza() {
+                return this.animal.raza;
+            }
+            verNombre() {
+                return this.animal.nombre;
+            }
+            verPatas() {
+                return this.animal.patas;
+            }
+            verAnimal(n) {
+                if (n === 1) return this.animal1;
+                if (n === 2) return this.animal2;
+            }
+        }
+
+        function programa(a) {
+            var obj = new Animal();
+            const animal = obj.verAnimal(a);
+            if (animal) {
+                document.write(`El tipo de animal es ${animal.tipo} <br>`);
+                document.write(`La raza del animal es ${animal.raza} <br>`);
+                document.write(`El nombre del animal es ${animal.nombre} <br>`);
+                document.write(`El numero de patas es ${animal.patas} <br>`);
+            }
+
+        }
+    </script>
+</head>
+
+<body>
+    <h3>Clase Animal</h3>
+    <input type="button" value="Pulsa gato" onclick="programa(1)">
+    <input type="button" value="Pulsa perro" onclick="programa(2)">
+</body>
+
+</html>

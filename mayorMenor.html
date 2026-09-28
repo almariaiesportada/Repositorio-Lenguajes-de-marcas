@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Introduce cuántos números vas a comparar<input type="text" name="" id="num">
+    <input type="button" value="boton" onclick="leerTotal()">
+    <script>
+        function leerTotal(){
+            let valor = document.getElementById("num").value;
+            let numero = parseFloat(valor);
+            let maximo;
+            let minimo;
+            let numT = window.prompt(`Numero 1: `);
+            let num = parseFloat(numT);
+
+            maximo = num;
+            minimo = num;
+            for(var i = 1; i< numero; i++){
+                let numT = window.prompt(`Numero ${i+1}: `);
+                let num = parseFloat(numT);
+                if(num > maximo){
+                    maximo = num;
+                }
+                if(num < minimo){
+                    minimo = num;
+                }
+            }
+
+            window.alert(`El máximo final es: ${maximo} y el mínimo: ${minimo}`);
+        }
+    </script>
+</body>
+</html>

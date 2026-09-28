@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Tabla de Multiplicar</h2>
+    <p>Introduce un número:</p>
+    <input type="text" id="numero">
+    <button onclick="calcularTabla()">Calcular</button>
+
+    <div id="resultado"></div>
+
+    <script>
+        //Función para calcular las multiplicaciones de la tabla de multiplicar.
+        function calcularTabla() {
+            const numeroInput = document.getElementById('numero').value;
+            const resultadoDiv = document.getElementById('resultado');
+            resultadoDiv.innerHTML = ''; 
+
+            const numero = parseInt(numeroInput);
+
+            let tablaHTML = '<ul>';
+            for (let i = 1; i <= 10; i++) {
+                tablaHTML += `<li>${numero} x ${i} = ${numero * i}</li>`;
+            }
+            tablaHTML += '</ul>';
+            
+            resultadoDiv.innerHTML = tablaHTML;
+        }
+    </script>
+</body>
+</html>

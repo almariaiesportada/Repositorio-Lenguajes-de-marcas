@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+    <button onclick="sumar()">Calcular suma</button>
+<body>
+    <script>
+        function sumar() {
+
+            let numeros = window.prompt("¿Cuantos números quieres sumar?");
+            let suma = 0;
+
+            for (var i = 0; i < numeros; i++) {
+                let valor1 = window.prompt(`Numero ${i+1}`);
+                let nume1 = parseFloat(valor1);
+                suma = suma + nume1;
+            }
+            window.alert("Resultado: " + suma);
+        }
+    </script>
+</body>
+
+</html>

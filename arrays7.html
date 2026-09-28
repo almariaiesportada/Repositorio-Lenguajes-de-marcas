@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alumnos y Notas</title>
+    <script>
+        //Primera parte
+
+        var alumnos = ["Joan", "Carol", "María", "Ángela", "Lucía", "Andres"];
+        var notas = [];
+
+        for (let i = 0; i < 6; i++) 
+        {
+            notas.push(5);
+        }
+
+        //Segunda parte
+
+        document.write(`<h2>Notas de la asignatura</h2>`);
+        let numero = window.prompt("Introduzca el número del alumno (0-5): ", "0");
+
+        numero = parseInt(numero);
+
+        document.write(`<br> Nota de ${alumnos[numero]} inicial ${notas[numero]}`);
+        let datoNota = window.prompt("Introduce su nueva nota: ");
+
+        let valorNota = parseInt(datoNota);
+
+        notas[numero] = valorNota;
+
+        //Tercera parte
+
+        document.write(`<br><h2>Notas finales:<h2>`);
+        for (let i = 0; i < alumnos.length; i++) 
+        {
+            document.write(`alum num: ${i} nombre: ${alumnos[i]} nota: ${notas[i]}<br>`);
+        }
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

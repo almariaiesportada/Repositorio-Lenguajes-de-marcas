@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    Introduce el número de noches<input type="text" name="" id="noches">
+    <select name="" id="tipoHabitacion">
+        <option value="Individual">Individual</option>
+        <option value="Doble">Doble</option>
+        <option value="Suite">Suite</option>
+    </select>
+
+    <select id="temporada">
+        <option value="baja">Baja</option>
+        <option value="alta">Alta (+20%)</option>
+    </select>
+
+    <label>
+        <input type="checkbox" id="desayuno">
+        Desayuno (+10€ por noche)
+    </label>
+
+    <button onclick="calcularPrecio()">Calcular el Precio</button>
+
+    <p id="resultado"></p>
+
+    <script>
+        function calcularPrecio() {
+
+            const noches = document.getElementById("noches").value;
+            const tipo = document.getElementById("tipoHabitacion").value;
+            const temporada = document.getElementById("temporada").value;
+            const desayuno = document.getElementById("desayuno").checked;
+            
+            var precio = 0;
+            switch (tipo) {
+                case 'Individual':
+                    precio = 50 * noches;
+                    break;
+                case 'Doble':
+                    precio = 80 * noches;
+                    break;
+                case 'Suite':
+                    precio = 120 * noches;
+                    break;
+            }
+
+            let total = precio * noches;
+
+            if (desayuno) {
+                total += 10 * noches;
+            }
+
+            if (temporada === "alta") {
+                total *= 1.20;
+            }
+
+            if (noches >= 7) {
+                total *= 0.90;
+            }
+
+            document.getElementById("resultado").textContent = "Total de la reserva: " + total;
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Galeria de fotos</title>
+    <style>
+        .columnas-contenedor p {
+            column-count: 3;
+            column-gap: 20px;
+            column-rule: 1px solid black;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            text-align: justify;
+        }
+
+        .columnas-contenedor {
+            width: 80%;
+            margin: 20px auto;
+        }
+
+        .columnas-contenedor p::first-letter {
+            font-size: 3em;
+            font-weight: bold;
+            float: left;
+            line-height: 1;
+            padding-right: 5px;
+        }
+
+        .imagen-animada {
+            transition: transform 1.25s ease;
+            display: inline-block;
+            transform-origin: center center;
+            border: solid 5px black;
+            border-style: solid;
+
+        }
+
+        .imagen-animada:hover {
+            transform: rotate(360deg) scale(1.2);
+            border-radius: 2cm;
+        }
+
+        h1 {
+            text-align: center;
+            rotate: calc(-20deg);
+        }
+
+        .columnas-contenedor {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Galería de fotos</h1>
+
+    <img src="formas.jpg" alt="Imagen rotando y agrandando" class="imagen-animada" width="300" />
+    <img src="formasgeo.jpg" alt="Imagen rotando y agrandando" class="imagen-animada" width="300" />
+
+    <img src="formasgeometricas.jpg" alt="Imagen rotando y agrandando" class="imagen-animada" width="300" />
+    <img src="rectangulos.jpg" alt="Imagen rotando y agrandando" class="imagen-animada" width="300" />
+
+
+    <img src="figuras.png" alt="Imagen rotando y agrandando" class="imagen-animada" width="300" />
+    <img src="hoja.jpg" alt="Imagen rotando y agrandando" class="imagen-animada" width="300" />
+
+
+    <img src="tablero.png" alt="Imagen rotando y agrandando" class="imagen-animada" width="300" />
+    <img src="cuadrados.jpg" alt="Imagen rotando y agrandando" class="imagen-animada" width="300" />
+
+    <div class="columnas-contenedor">
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem accusantium ipsum labore reiciendis
+            reprehenderit consectetur, placeat ullam repellendus, fugit voluptatem fuga est voluptatum laudantium modi
+            id? Provident quaerat necessitatibus eaque quos illo esse ullam repudiandae. Ea ipsam dolor dolorem ipsa
+            eaque veritatis officia repellendus earum eius obcaecati ab voluptas dolores, numquam neque cum qui pariatur
+            officiis? Voluptates mollitia sapiente voluptatum, doloribus totam officia reiciendis quod ex quibusdam,
+            explicabo modi ab provident nulla ad atque animi soluta eos iusto accusantium laudantium necessitatibus
+            harum sequi, natus neque. Asperiores mollitia eligendi sapiente accusamus ipsam blanditiis tempore inventore
+            aliquid perferendis atque! Rerum architecto saepe in, soluta ipsum rem reprehenderit maxime repellendus.
+            Possimus veniam sit, blanditiis tenetur ipsum voluptatibus. Porro delectus adipisci assumenda. Distinctio,
+            sapiente at fugit deserunt error, consequuntur voluptatum dolorum eveniet officia, enim voluptate suscipit
+            expedita sit voluptas! Ea dolorum autem voluptas porro nesciunt veniam perferendis iusto commodi provident
+            praesentium. Ipsa beatae est, officiis enim, quos vitae voluptatibus a reprehenderit obcaecati consequuntur
+            impedit fuga quos tempore, modi quia delectus sed unde cum deleniti id autem illum temporibus! Eligendi,
+            omnis eos eveniet inventore, repudiandae ipsam aliquid error quod tenetur reprehenderit minus. Libero sequi
+            quas mollitia maxime ullam ex, fugiat earum eum modi illo obcaecati at soluta commodi corporis voluptate
+            saepe illum velit officiis labore ratione quaerat nemo consequatur? Quisquam placeat quibusdam accusamus
+            architecto assumenda. Blanditiis ullam repellendus perspiciatis temporibus magnam beatae voluptas, placeat
+            eveniet alias blanditiis minima id dolore nulla. Aperiam voluptas quasi illum deserunt. Natus accusantium
+            saepe ipsa? Tempora, ipsum? Aut minima voluptatibus sit ea enim reprehenderit soluta necessitatibus sed, qui
+            provident! Non, soluta impedit nobis accusantium enim odit dolor eos minus iste delectus sunt, quaerat nam.
+            Culpa optio dignissimos totam deleniti id dolores, maiores fugiat atque harum adipisci dolorem? Cumque
+            perferendis error vero quos nisi fugiat sit voluptatibus itaque labore. Nihil fugit unde provident incidunt
+            asperiores inventore sequi officiis quibusdam. Itaque vel dolore cupiditate, maxime suscipit sint qui
+            quibusdam! Molestiae dignissimos ad voluptatum doloremque obcaecati fugiat, repellat minus delectus autem
+            exercitationem mollitia veniam enim, tempore incidunt cupiditate ut? Quisquam debitis iste dolorem quis
+            cumque, ex ducimus quae provident? Perferendis itaque, explicabo sequi deleniti doloribus atque cumque in
+            molestiae consequatur minima placeat.
+        </p>
+    </div>
+    <footer style="text-align: center;">© Copyright - Todos los derechos reservados</footer>
+</body>
+
+</html>

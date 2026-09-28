@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de alquiler de coche</title>
+</head>
+
+<body>
+    Introduce los días que vas a alquilar el coche <input type="text" id="dias">
+    <p> Tipo de coche 
+        <select name="" id="tipoCoche">
+        <option value="economico">economico</option>
+        <option value="compacto">compacto</option>
+        <option value="lujo">lujo</option>
+    </select>
+    </p>
+    <p> Temporada 
+        <select name="" id="temporada">
+        <option value="baja">baja</option>
+        <option value="alta">alta</option>
+    </select>
+    </p>
+    
+    Seguro extra<input type="checkbox" name="" id="seguro"><br>
+    <button onclick="calcular()">Calcular</button>
+    <p id="resultado"></p>
+
+    <script>
+        function calcularAlquiler(dias, tipo, temporada, seguro) {
+            let precioDia = 0;
+
+            switch (tipo) {
+                case "economico":
+                    precioDia = 30;
+                    break;
+                case "compacto":
+                    precioDia = 40;
+                    break;
+                case "lujo":
+                    precioDia = 100;
+                    break;
+            }
+
+            let total = precioDia * dias;
+
+            if (seguro) {
+                total += 15 * dias;
+            }
+        
+            if (temporada === "alta") {
+                total *= 1.25;
+            }
+
+            if (dias >= 14) {
+                total *= 0.80;
+            }
+            else if (dias >= 7) {
+                total *= 0.90;
+            }
+
+            return total;
+        }
+        function calcular() {
+            let dias = document.getElementById("dias").value;
+            let tipo = document.getElementById("tipoCoche").value;
+            let temporada = document.getElementById("temporada").value;
+            let seguro = document.getElementById("seguro").checked;
+
+            let total = calcularAlquiler(dias, tipo, temporada, seguro);
+
+            document.getElementById("resultado").textContent =
+                "Total: " + total.toFixed(2) + " €";
+        }
+    </script>
+</body>
+
+</html>

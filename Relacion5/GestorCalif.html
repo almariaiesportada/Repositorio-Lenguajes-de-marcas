@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de calificaciones</title>
+</head>
+
+<body>
+    <script>
+        var alumnos = [{ nombre: "Pablo", nota: 8 }, { nombre: "Javier", nota: 4 }, { nombre: "Lucía", nota: 6 }, { nombre: "Ana", nota: 5 }];
+        var alumnoTop = alumnos[0];
+        
+        for (var i = 0; i < alumnos.length; i++) {
+            if (alumnos[i].nota >= 5) {
+                document.write(alumnos[i].nombre + " tiene un " + alumnos[i].nota + " y está APROBADO<br/>");
+            } else {
+                document.write(alumnos[i].nombre + " tiene un " + alumnos[i].nota + " y está SUSPENSO<br/>");
+            }
+            if (alumnos[i].nota > alumnoTop.nota) {
+                alumnoTop = alumnos[i];
+            }
+        }
+        function calcularMedia(alumnos) {
+            var suma = 0;
+            for (var i = 0; i < alumnos.length; i++) {
+                suma += alumnos[i].nota;
+            }
+            var media = suma / alumnos.length;
+            return media;
+        }
+
+        var mediaFinal = calcularMedia(alumnos);
+        document.write("<br/><strong>La nota media de la clase es: </strong>" + mediaFinal);
+
+        document.write("<br/>El mejor alumno es " + alumnoTop.nombre + " con un " + alumnoTop.nota);
+    </script>
+</body>
+</html>

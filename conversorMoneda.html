@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Conversor de monedas</title>
+</head>
+
+<body>
+    <h2>Conversor de monedas</h2>
+
+    <input type="number" id="cantidad" placeholder="Cantidad">
+
+    <select id="tipo">
+        <option value="euros">Euros a Libras</option>
+        <option value="libras">Libras a Euros</option>
+    </select>
+
+    <button onclick="convertir()">Convertir</button>
+
+    <p id="resultado"></p>
+
+    <script>
+        function convertirMoneda(cantidad, tipo) {
+
+            if (tipo === "euros") {
+                return (cantidad * 0.86).toFixed(2) + " GBP";
+
+            } else if (tipo === "libras") {
+                return (cantidad * 1.16).toFixed(2) + " EUR";
+
+            } else {
+                return "Tipo no válido";
+            }
+        }
+        function convertir() {
+            const cantidad = document.getElementById("cantidad").value;
+            const tipo = document.getElementById("tipo").value;
+
+            if (!cantidad || cantidad <= 0) {
+                document.getElementById("resultado").textContent =
+                    "Introduce una cantidad válida";
+                return;
+            }
+
+            const resultado = convertirMoneda(cantidad, tipo);
+
+            document.getElementById("resultado").textContent = "Resultado: " + resultado;
+        }
+    </script>
+
+</body>
+</html>

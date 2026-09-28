@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Introduce un texto: </h1>
+    <input type="text" id="texto1">
+    <button onclick="separarPalabras()">Contar palabras</button>
+    <p id="resultado"></p>
+
+    <script>
+        function separarPalabras(){
+            let frase = document.getElementById("texto1").value;
+
+            frase = frase.trim();
+            frase = frase.replace(/\s+/g, " ");
+            let palabras = frase.split(" ");
+            document.getElementById("resultado").textContent = `El texto tiene ${palabras.length} palabra(s).`;
+        }
+    </script>
+</body>
+</html>

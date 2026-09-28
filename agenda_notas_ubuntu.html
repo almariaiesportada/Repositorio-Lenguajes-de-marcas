@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agenda de Notas</title>
+  <style>
+    :root{
+      --bg:#0f172a;
+      --card:#111827;
+      --card-2:#1f2937;
+      --text:#e5e7eb;
+      --muted:#94a3b8;
+      --accent:#22c55e;
+      --accent-2:#38bdf8;
+      --danger:#ef4444;
+      --warn:#f59e0b;
+      --border:#334155;
+      --input:#0b1220;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;
+      background:linear-gradient(180deg,#0b1120 0%, #0f172a 100%);
+      color:var(--text);
+    }
+    .wrap{
+      max-width:1100px;
+      margin:0 auto;
+      padding:24px;
+    }
+    h1{
+      margin:0 0 8px;
+      font-size:2rem;
+    }
+    p{color:var(--muted)}
+    .grid{
+      display:grid;
+      grid-template-columns: 320px 1fr;
+      gap:18px;
+      margin-top:20px;
+    }
+    .card{
+      background:rgba(17,24,39,.95);
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:18px;
+      box-shadow:0 10px 30px rgba(0,0,0,.25);
+    }
+    .card h2,.card h3{margin-top:0}
+    label{
+      display:block;
+      margin:12px 0 6px;
+      color:#cbd5e1;
+      font-size:.95rem;
+    }
+    input, select{
+      width:100%;
+      padding:11px 12px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background:var(--input);
+      color:var(--text);
+      outline:none;
+    }
+    input:focus, select:focus{
+      border-color:var(--accent-2);
+      box-shadow:0 0 0 3px rgba(56,189,248,.15);
+    }
+    .row{
+      display:flex;
+      gap:10px;
+      align-items:center;
+    }
+    .row > *{flex:1}
+    button{
+      border:0;
+      border-radius:12px;
+      padding:11px 14px;
+      cursor:pointer;
+      font-weight:700;
+      color:white;
+      background:linear-gradient(135deg,var(--accent),#16a34a);
+      transition:.15s transform ease,.15s opacity ease;
+    }
+    button:hover{transform:translateY(-1px)}
+    button.secondary{
+      background:#2563eb;
+    }
+    button.danger{
+      background:var(--danger);
+    }
+    button.ghost{
+      background:#374151;
+    }
+    .toolbar{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:14px;
+    }
+    .subject-list{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-top:14px;
+      max-height:420px;
+      overflow:auto;
+      padding-right:4px;
+    }
+    .subject-item{
+      border:1px solid var(--border);
+      background:var(--card-2);
+      border-radius:14px;
+      padding:12px;
+      cursor:pointer;
+    }
+    .subject-item.active{
+      outline:2px solid rgba(56,189,248,.6);
+      background:#162033;
+    }
+    .subject-name{
+      font-weight:700;
+      margin-bottom:4px;
+    }
+    .badge{
+      display:inline-block;
+      padding:4px 8px;
+      border-radius:999px;
+      font-size:.8rem;
+      font-weight:700;
+      background:#0b3b27;
+      color:#86efac;
+    }
+    .badge.warn{
+      background:#4a2f05;
+      color:#fcd34d;
+    }
+    .badge.danger{
+      background:#4c1010;
+      color:#fca5a5;
+    }
+    table{
+      width:100%;
+      border-collapse:collapse;
+      margin-top:12px;
+      overflow:hidden;
+      border-radius:14px;
+    }
+    th, td{
+      padding:12px 10px;
+      border-bottom:1px solid var(--border);
+      text-align:left;
+      vertical-align:middle;
+    }
+    th{
+      color:#cbd5e1;
+      font-size:.92rem;
+      background:#121b2d;
+    }
+    tr:hover td{background:rgba(255,255,255,.02)}
+    .summary{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:12px;
+      margin-top:14px;
+    }
+    .kpi{
+      background:#101827;
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:14px;
+    }
+    .kpi .label{
+      font-size:.9rem;
+      color:var(--muted);
+      margin-bottom:8px;
+    }
+    .kpi .value{
+      font-size:1.6rem;
+      font-weight:800;
+    }
+    .empty{
+      color:var(--muted);
+      padding:20px 8px;
+    }
+    .footer-note{
+      margin-top:14px;
+      font-size:.9rem;
+      color:var(--muted);
+    }
+    .right-top{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:flex-start;
+      flex-wrap:wrap;
+    }
+    .small{
+      font-size:.88rem;
+      color:var(--muted);
+    }
+    .actions{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+    @media (max-width: 900px){
+      .grid{grid-template-columns:1fr}
+      .summary{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Agenda de Notas</h1>
+    <p>Guarda tus asignaturas, añade exámenes o tareas, y calcula la media automáticamente. Todo se guarda en tu navegador.</p>
+
+    <div class="grid">
+      <section class="card">
+        <h2>Nueva asignatura</h2>
+        <label for="subjectName">Nombre</label>
+        <input id="subjectName" placeholder="Ej. Matemáticas" />
+
+        <label for="subjectTeacher">Profesor/a (opcional)</label>
+        <input id="subjectTeacher" placeholder="Ej. María" />
+
+        <label for="subjectTarget">Nota objetivo (opcional)</label>
+        <input id="subjectTarget" type="number" min="0" max="10" step="0.1" placeholder="Ej. 7.5" />
+
+        <div class="toolbar">
+          <button id="addSubjectBtn">Añadir asignatura</button>
+          <button class="ghost" id="loadDemoBtn">Cargar ejemplo</button>
+        </div>
+
+        <hr style="border-color:var(--border); margin:18px 0;">
+        <h3>Tus asignaturas</h3>
+        <div id="subjectList" class="subject-list"></div>
+
+        <div class="toolbar">
+          <button class="secondary" id="exportBtn">Exportar copia</button>
+          <button class="ghost" id="importBtn">Importar copia</button>
+          <button class="danger" id="resetBtn">Borrar todo</button>
+        </div>
+        <input id="importFile" type="file" accept=".json" style="display:none;" />
+      </section>
+
+      <section class="card">
+        <div class="right-top">
+          <div>
+            <h2 id="detailTitle">Selecciona una asignatura</h2>
+            <div id="detailMeta" class="small">Aquí verás tus notas, tu media y el progreso.</div>
+          </div>
+          <div class="actions">
+            <button class="ghost" id="deleteSubjectBtn" disabled>Eliminar asignatura</button>
+          </div>
+        </div>
+
+        <div id="detailContent">
+          <div class="empty">Añade una asignatura en la izquierda o carga un ejemplo.</div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = "agenda_notas_app_v1";
+
+    let state = loadState();
+    let selectedSubjectId = state.subjects[0]?.id || null;
+
+    const el = {
+      subjectName: document.getElementById("subjectName"),
+      subjectTeacher: document.getElementById("subjectTeacher"),
+      subjectTarget: document.getElementById("subjectTarget"),
+      addSubjectBtn: document.getElementById("addSubjectBtn"),
+      loadDemoBtn: document.getElementById("loadDemoBtn"),
+      subjectList: document.getElementById("subjectList"),
+      detailTitle: document.getElementById("detailTitle"),
+      detailMeta: document.getElementById("detailMeta"),
+      detailContent: document.getElementById("detailContent"),
+      deleteSubjectBtn: document.getElementById("deleteSubjectBtn"),
+      exportBtn: document.getElementById("exportBtn"),
+      importBtn: document.getElementById("importBtn"),
+      importFile: document.getElementById("importFile"),
+      resetBtn: document.getElementById("resetBtn")
+    };
+
+    function uid() {
+      return Math.random().toString(36).slice(2, 10);
+    }
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return { subjects: [] };
+        const parsed = JSON.parse(raw);
+        if (!parsed.subjects || !Array.isArray(parsed.subjects)) return { subjects: [] };
+        return parsed;
+      } catch {
+        return { subjects: [] };
+      }
+    }
+
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function subjectAverage(subject) {
+      if (!subject.items.length) return null;
+      let weightedTotal = 0;
+      let totalWeight = 0;
+
+      for (const item of subject.items) {
+        const grade = Number(item.grade);
+        const weight = Number(item.weight);
+        if (Number.isFinite(grade) && Number.isFinite(weight) && weight > 0) {
+          weightedTotal += grade * weight;
+          totalWeight += weight;
+        }
+      }
+      if (totalWeight <= 0) return null;
+      return weightedTotal / totalWeight;
+    }
+
+    function overallAverage() {
+      const avgs = state.subjects
+        .map(subjectAverage)
+        .filter(v => v !== null && Number.isFinite(v));
+      if (!avgs.length) return null;
+      return avgs.reduce((a,b)=>a+b,0) / avgs.length;
+    }
+
+    function statusBadge(avg) {
+      if (avg === null) return '<span class="badge warn">Sin notas</span>';
+      if (avg >= 5) return '<span class="badge">Aprobado</span>';
+      return '<span class="badge danger">Suspenso</span>';
+    }
+
+    function fmt(n) {
+      return n === null || Number.isNaN(n) ? "—" : Number(n).toFixed(2);
+    }
+
+    function render() {
+      renderSubjectList();
+      renderDetail();
+      saveState();
+    }
+
+    function renderSubjectList() {
+      const globalAvg = overallAverage();
+      if (!state.subjects.length) {
+        el.subjectList.innerHTML = `
+          <div class="empty">
+            No hay asignaturas todavía.<br>
+            Añade una o pulsa <strong>Cargar ejemplo</strong>.
+            <div class="footer-note">Media global: ${fmt(globalAvg)}</div>
+          </div>
+        `;
+        return;
+      }
+
+      el.subjectList.innerHTML = state.subjects.map(subject => {
+        const avg = subjectAverage(subject);
+        return `
+          <div class="subject-item ${subject.id === selectedSubjectId ? "active" : ""}" data-id="${subject.id}">
+            <div class="subject-name">${escapeHtml(subject.name)}</div>
+            <div class="small">${subject.items.length} nota(s)</div>
+            <div style="margin-top:8px; display:flex; justify-content:space-between; align-items:center; gap:8px;">
+              ${statusBadge(avg)}
+              <strong>${fmt(avg)}</strong>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      [...el.subjectList.querySelectorAll(".subject-item")].forEach(item => {
+        item.addEventListener("click", () => {
+          selectedSubjectId = item.dataset.id;
+          render();
+        });
+      });
+    }
+
+    function renderDetail() {
+      const subject = state.subjects.find(s => s.id === selectedSubjectId);
+      el.deleteSubjectBtn.disabled = !subject;
+
+      if (!subject) {
+        el.detailTitle.textContent = "Selecciona una asignatura";
+        el.detailMeta.textContent = "Aquí verás tus notas, tu media y el progreso.";
+        el.detailContent.innerHTML = `<div class="empty">No hay ninguna asignatura seleccionada.</div>`;
+        return;
+      }
+
+      const avg = subjectAverage(subject);
+      const approved = avg !== null && avg >= 5;
+      const remaining = subject.target ? Number(subject.target) - (avg ?? 0) : null;
+
+      el.detailTitle.textContent = subject.name;
+      el.detailMeta.textContent =
+        (subject.teacher ? `Profesor/a: ${subject.teacher} · ` : "") +
+        `Media actual: ${fmt(avg)}`;
+
+      el.detailContent.innerHTML = `
+        <div class="summary">
+          <div class="kpi">
+            <div class="label">Media de la asignatura</div>
+            <div class="value">${fmt(avg)}</div>
+          </div>
+          <div class="kpi">
+            <div class="label">Estado</div>
+            <div class="value" style="font-size:1.2rem">${approved ? "Aprobado" : (avg === null ? "Sin notas" : "Suspenso")}</div>
+          </div>
+          <div class="kpi">
+            <div class="label">Nota objetivo</div>
+            <div class="value">${subject.target ? Number(subject.target).toFixed(2) : "—"}</div>
+          </div>
+        </div>
+
+        <hr style="border-color:var(--border); margin:18px 0;">
+
+        <h3>Añadir nota</h3>
+        <div class="row">
+          <div>
+            <label>Nombre</label>
+            <input id="itemName" placeholder="Ej. Examen 1" />
+          </div>
+          <div>
+            <label>Tipo</label>
+            <select id="itemType">
+              <option value="Examen">Examen</option>
+              <option value="Tarea">Tarea</option>
+              <option value="Proyecto">Proyecto</option>
+              <option value="Práctica">Práctica</option>
+              <option value="Otro">Otro</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label>Nota (0-10)</label>
+            <input id="itemGrade" type="number" min="0" max="10" step="0.1" placeholder="Ej. 8.5" />
+          </div>
+          <div>
+            <label>Peso</label>
+            <input id="itemWeight" type="number" min="1" step="1" value="1" />
+          </div>
+        </div>
+
+        <label>Fecha (opcional)</label>
+        <input id="itemDate" type="date" />
+
+        <div class="toolbar">
+          <button id="addItemBtn">Guardar nota</button>
+        </div>
+
+        <h3 style="margin-top:18px;">Notas guardadas</h3>
+        ${
+          subject.items.length
+            ? `
+            <table>
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Tipo</th>
+                  <th>Nota</th>
+                  <th>Peso</th>
+                  <th>Fecha</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                ${subject.items.map(item => `
+                  <tr>
+                    <td>${escapeHtml(item.name)}</td>
+                    <td>${escapeHtml(item.type)}</td>
+                    <td><strong>${Number(item.grade).toFixed(2)}</strong></td>
+                    <td>${item.weight}</td>
+                    <td>${item.date ? item.date : "—"}</td>
+                    <td><button class="danger delete-item" data-id="${item.id}">Borrar</button></td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+            `
+            : `<div class="empty">Todavía no has añadido notas en esta asignatura.</div>`
+        }
+
+        <div class="footer-note">
+          La media se calcula de forma ponderada: cada nota se multiplica por su <strong>peso</strong>.
+          Si todas las notas tienen peso 1, la media será una media normal.
+          ${
+            remaining !== null && Number.isFinite(remaining)
+              ? `<br>Para llegar a tu objetivo de <strong>${Number(subject.target).toFixed(2)}</strong>, te faltan aproximadamente <strong>${remaining > 0 ? remaining.toFixed(2) : "0.00"}</strong> puntos sobre tu media actual.`
+              : ""
+          }
+        </div>
+      `;
+
+      const addItemBtn = document.getElementById("addItemBtn");
+      addItemBtn.addEventListener("click", () => addItem(subject.id));
+
+      [...document.querySelectorAll(".delete-item")].forEach(btn => {
+        btn.addEventListener("click", () => {
+          deleteItem(subject.id, btn.dataset.id);
+        });
+      });
+    }
+
+    function addSubject() {
+      const name = el.subjectName.value.trim();
+      const teacher = el.subjectTeacher.value.trim();
+      const targetRaw = el.subjectTarget.value.trim();
+      const target = targetRaw === "" ? null : Number(targetRaw);
+
+      if (!name) {
+        alert("Escribe el nombre de la asignatura.");
+        return;
+      }
+      if (target !== null && (!Number.isFinite(target) || target < 0 || target > 10)) {
+        alert("La nota objetivo debe estar entre 0 y 10.");
+        return;
+      }
+
+      const subject = {
+        id: uid(),
+        name,
+        teacher,
+        target,
+        items: []
+      };
+      state.subjects.push(subject);
+      selectedSubjectId = subject.id;
+
+      el.subjectName.value = "";
+      el.subjectTeacher.value = "";
+      el.subjectTarget.value = "";
+      render();
+    }
+
+    function addItem(subjectId) {
+      const subject = state.subjects.find(s => s.id === subjectId);
+      if (!subject) return;
+
+      const name = document.getElementById("itemName").value.trim();
+      const type = document.getElementById("itemType").value;
+      const grade = Number(document.getElementById("itemGrade").value);
+      const weight = Number(document.getElementById("itemWeight").value);
+      const date = document.getElementById("itemDate").value;
+
+      if (!name) {
+        alert("Escribe un nombre para la nota.");
+        return;
+      }
+      if (!Number.isFinite(grade) || grade < 0 || grade > 10) {
+        alert("La nota debe estar entre 0 y 10.");
+        return;
+      }
+      if (!Number.isFinite(weight) || weight <= 0) {
+        alert("El peso debe ser mayor que 0.");
+        return;
+      }
+
+      subject.items.push({
+        id: uid(),
+        name,
+        type,
+        grade,
+        weight,
+        date
+      });
+      render();
+    }
+
+    function deleteItem(subjectId, itemId) {
+      const subject = state.subjects.find(s => s.id === subjectId);
+      if (!subject) return;
+      subject.items = subject.items.filter(i => i.id !== itemId);
+      render();
+    }
+
+    function deleteSubject() {
+      const subject = state.subjects.find(s => s.id === selectedSubjectId);
+      if (!subject) return;
+      const ok = confirm(`¿Eliminar la asignatura "${subject.name}"?`);
+      if (!ok) return;
+      state.subjects = state.subjects.filter(s => s.id !== selectedSubjectId);
+      selectedSubjectId = state.subjects[0]?.id || null;
+      render();
+    }
+
+    function loadDemo() {
+      state = {
+        subjects: [
+          {
+            id: uid(),
+            name: "Matemáticas",
+            teacher: "María",
+            target: 7.5,
+            items: [
+              { id: uid(), name: "Examen 1", type: "Examen", grade: 7.2, weight: 3, date: "2026-03-10" },
+              { id: uid(), name: "Tarea funciones", type: "Tarea", grade: 8.6, weight: 1, date: "2026-03-14" },
+              { id: uid(), name: "Proyecto", type: "Proyecto", grade: 9.0, weight: 2, date: "2026-03-20" }
+            ]
+          },
+          {
+            id: uid(),
+            name: "Inglés",
+            teacher: "David",
+            target: 8,
+            items: [
+              { id: uid(), name: "Reading", type: "Examen", grade: 8.1, weight: 2, date: "2026-03-11" },
+              { id: uid(), name: "Writing", type: "Práctica", grade: 7.8, weight: 1, date: "2026-03-18" }
+            ]
+          }
+        ]
+      };
+      selectedSubjectId = state.subjects[0].id;
+      render();
+    }
+
+    function exportData() {
+      const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "agenda-notas-copia.json";
+      a.click();
+      URL.revokeObjectURL(a.href);
+    }
+
+    function importData(file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const parsed = JSON.parse(reader.result);
+          if (!parsed.subjects || !Array.isArray(parsed.subjects)) {
+            throw new Error("Formato inválido");
+          }
+          state = parsed;
+          selectedSubjectId = state.subjects[0]?.id || null;
+          render();
+        } catch {
+          alert("No se pudo importar el archivo.");
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function resetAll() {
+      const ok = confirm("¿Seguro que quieres borrar todas tus asignaturas y notas?");
+      if (!ok) return;
+      state = { subjects: [] };
+      selectedSubjectId = null;
+      render();
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#39;");
+    }
+
+    el.addSubjectBtn.addEventListener("click", addSubject);
+    el.loadDemoBtn.addEventListener("click", loadDemo);
+    el.deleteSubjectBtn.addEventListener("click", deleteSubject);
+    el.exportBtn.addEventListener("click", exportData);
+    el.importBtn.addEventListener("click", () => el.importFile.click());
+    el.importFile.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (file) importData(file);
+      e.target.value = "";
+    });
+    el.resetBtn.addEventListener("click", resetAll);
+
+    render();
+  </script>
+</body>
+</html>

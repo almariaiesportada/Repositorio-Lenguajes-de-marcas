@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
+</head>
+<body>
+    Introduce un número cualquiera <input type="text" id="num1"> <br>
+    Introduce otro número cualquiera <input type="text" id="num2"><br><br>
+    
+    <input type="button" value="+" onclick="calcular('+')">
+    <input type="button" value="-" onclick="calcular('-')">
+    <input type="button" value="*" onclick="calcular('*')">
+    <input type="button" value="/" onclick="calcular('/')">
+
+    <script>
+        function calcular(operacion){
+            let valor1 = document.getElementById("num1").value;
+            let valor2 = document.getElementById("num2").value;
+            let nume1 = parseFloat(valor1);
+            let nume2 = parseFloat(valor2);
+
+            var resultado;
+
+            switch(operacion){
+                case "+":
+                    resultado = nume1 + nume2;
+                    break;
+
+                case "-":
+                    resultado = nume1 - nume2;
+                    break;
+
+                case "*":
+                    resultado = nume1 * nume2;
+                    break;
+
+                case "/":
+                    if(nume2 == 0){
+                        alert("No se puede dividir entre 0");
+                        return;
+                    }
+                    resultado = nume1 / nume2;
+                    break;
+            }
+
+            window.alert("Resultado: " + resultado);
+        }
+    </script>
+</body>
+</html>

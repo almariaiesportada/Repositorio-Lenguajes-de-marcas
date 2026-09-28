@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //Pedimos al usuario los datos
+        let altura = parseFloat(window.prompt("Introduce tu altura en cm: "));
+        let edad = parseInt(window.prompt("Introduce tu edad"));
+        let sexo = window.prompt("Introduce tu sexo (H/M): ").toUpperCase();
+        let pesoActual = parseFloat(window.prompt("Introduce tu peso actual en kg: "));
+        //Calculamos el peso ideal con la fórmula
+        let pesoIdeal = 50 + ((altura - 150) / 4) * 3 + ((edad - 20) / 4);
+        //Si es mujer lo multiplicamos por 0.9
+        if (sexo === "M") {
+            pesoIdeal *= 0.9;
+        }
+        //Imprimimos el peso ideal en kg
+        window.alert("Tu peso ideal es: " + pesoIdeal + " kg");
+    </script>
+</body>
+</html>

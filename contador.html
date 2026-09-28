@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contador de positivos, negativos y ceros</title>
+</head>
+
+<body>
+    Introduce la cantidad de números<input type="text" name="" id="num">
+    <input type="button" value="ENVIAR" onclick="contador()">
+    <script>
+        function contador() {
+            let contadorPositivos = 0;
+            let contadorNegativos = 0;
+            let contadorCeros = 0;
+            let num = document.getElementById("num").value;
+            for (var i = 0; i < num; i++) {
+                let numeroT = window.prompt(`Introduce el numero ${i + 1}`);
+                let numero = parseFloat(numeroT);
+                if (numero > 0) {
+                    contadorPositivos++;
+                } else if (numero < 0) {
+                    contadorNegativos++;
+                } else {
+                    contadorCeros++;
+                }
+            }
+            window.alert(`Los numeros positivos son ${contadorPositivos} y negativos ${contadorNegativos} y ceros ${contadorCeros}`);
+        }
+    </script>
+</body>
+
+</html>

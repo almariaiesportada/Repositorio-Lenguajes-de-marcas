@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Conversor de temperaturas:</h2>
+    <p>Convertir a:</p>
+    <select id="unidad">
+        <option value="K">Kelvin (K)</option>
+        <option value="F">Fahrenheit (F)</option>
+    </select>
+    <button onclick="convertir()">Convertir</button>
+    <p id="resultado"></p>
+    <script>
+        //Función que convierte la temperatura introducida en otra unidad de temperatura
+        function convertir() {
+            // Pedimos la temperatura en °C
+            let temp = parseFloat(prompt("Introduce una temperatura en °C:"));
+
+            // Obtenemos la unidad seleccionada del <select>
+            let unidad = document.getElementById("unidad").value;
+
+            let resultado;
+            if (unidad === "K") {
+                resultado = temp + 273.15; // °C a K
+                alert(`${temp}°C son ${resultado.toFixed(2)}K`);
+            } else if (unidad === "F") {
+                resultado = (temp * 9/5) + 32; // °C a °F
+                alert(`${temp}°C son ${resultado.toFixed(2)}°F`);
+            }
+        }
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edad Desde Fecha</title>
+</head>
+
+<body>
+    <script>
+        let año = window.prompt("Cual fue tu año de nacimiento?");
+        let añoN = parseInt(año);
+
+        let añoActual = window.prompt("Cual es el año actual?");
+        let añoA = parseInt(añoActual);
+
+        let edad = añoA - añoN;
+
+        if (edad >= 18) {
+            document.write(`Eres mayor de edad, tienes ${edad} años ahora`);
+        } else {
+            document.write(`Eres menor de edad, tienes ${edad} años actualmente`);
+        }
+
+    </script>
+</body>
+
+</html>
